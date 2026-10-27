@@ -1,0 +1,103 @@
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Arrays;
+
+public class Main {
+
+    // Part II - Frequency Count
+    public static HashMap<Integer, Integer> frequencyCount(int[] nums) {
+        HashMap<Integer, Integer> freq = new HashMap<>();
+
+        for (int num : nums) {
+            freq.put(num, freq.getOrDefault(num, 0) + 1);
+        }
+
+        return freq;
+    }
+
+    // Part III - First Duplicate
+    public static Integer firstDuplicate(int[] nums) {
+        HashSet<Integer> seen = new HashSet<>();
+
+        for (int num : nums) {
+            if (seen.contains(num)) {
+                return num;
+            }
+            seen.add(num);
+        }
+
+        return null;
+    }
+
+    // Part IV - Two Sum
+    public static int[] twoSum(int[] nums, int target) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < nums.length; i++) {
+            int complement = target - nums[i];
+
+            if (map.containsKey(complement)) {
+                return new int[]{map.get(complement), i};
+            }
+
+            map.put(nums[i], i);
+        }
+
+        return new int[]{};
+    }
+
+    // Part V - Roman to Integer
+    public static int romanToInt(String s) {
+        HashMap<Character, Integer> values = new HashMap<>();
+
+        values.put('I', 1);
+        values.put('V', 5);
+        values.put('X', 10);
+        values.put('L', 50);
+        values.put('C', 100);
+        values.put('D', 500);
+        values.put('M', 1000);
+
+        int total = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            int current = values.get(s.charAt(i));
+
+            if (i + 1 < s.length() &&
+                current < values.get(s.charAt(i + 1))) {
+                total -= current;
+            } else {
+                total += current;
+            }
+        }
+
+        return total;
+    }
+
+    // Main Method - Test All Problems
+    public static void main(String[] args) {
+
+        System.out.println("PART II - FREQUENCY COUNT");
+        int[] nums1 = {1, 2, 2, 3, 1, 1, 4};
+        System.out.println("Input: " + Arrays.toString(nums1));
+        System.out.println("Output: " + frequencyCount(nums1));
+
+        System.out.println("\nPART III - FIRST DUPLICATE");
+        int[] nums2 = {3, 1, 4, 2, 5, 3};
+        System.out.println("Input: " + Arrays.toString(nums2));
+        System.out.println("Output: " + firstDuplicate(nums2));
+
+        System.out.println("\nPART IV - TWO SUM");
+        int[] nums3 = {2, 7, 11, 15};
+        int target = 9;
+        System.out.println("Input: " + Arrays.toString(nums3));
+        System.out.println("Target: " + target);
+        System.out.println("Output: " + Arrays.toString(twoSum(nums3, target)));
+
+        System.out.println("\nPART V - ROMAN TO INTEGER");
+        String roman = "MCMXCIV";
+        System.out.println("Input: " + roman);
+        System.out.println("Output: " + romanToInt(roman));
+    }
+}
+
